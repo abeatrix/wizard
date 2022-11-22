@@ -9,7 +9,7 @@ export default function handler(req, res) {
   try {
     console.log('Checking if frontend is ready');
     const response = execSync(
-      `bash ${home}/SetupWizard/scripts/frontend.sh`
+      `bash ${home}/wizard/scripts/frontend.sh`
     ).toString();
     if (response.startsWith('Ready')) {
       return res.status(200).json('Ready');

@@ -17,9 +17,7 @@ export default function handler(req, res) {
   // Save size to root disk
   writeFile(`${home}/.sourcegraph-size`, size);
   console.log('Running launch script');
-  const response = execSync(
-    `bash ${home}/SetupWizard/scripts/launch.sh`
-  ).toString();
+  const response = execSync(`bash ${home}/wizard/scripts/launch.sh`).toString();
   if (response) {
     return res.status(200).json('Passed');
   }

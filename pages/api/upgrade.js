@@ -21,7 +21,7 @@ export default function handler(req, res) {
   );
   console.log('Running upgrade script for size ', size);
   const response = execSync(
-    `bash ${home}/SetupWizard/scripts/upgrade.sh`
+    `bash ${home}/wizard/scripts/upgrade.sh`
   ).toString();
   if (response.startsWith('Done')) {
     return res.status(200).json('Passed');
