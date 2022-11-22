@@ -10,7 +10,7 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(null);
   const [showErrors, setShowErrors] = useState(null);
-  const port = '3000';
+  const port = '30080';
   function teardownWizard(hostname) {
     fetch(`http://${hostname}:${port}/api/remove`)
       .then((res) => res.json())

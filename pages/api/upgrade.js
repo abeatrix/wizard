@@ -1,5 +1,7 @@
 const { copyFileSync, writeFile } = require('fs');
 const { execSync } = require('child_process');
+const os = require('os');
+const home = os.homedir();
 
 export default function handler(req, res) {
   if (req.method === 'GET') {
@@ -9,17 +11,17 @@ export default function handler(req, res) {
   const size = uri.searchParams.get('size') || 'XS';
   const version = uri.searchParams.get('version') || '';
   // Save size to root disk
-  writeFile('/home/sourcegraph/.sourcegraph-size', size);
+  writeFile(`${home}/.sourcegraph-size`, size);
   // Save version to root disk
-  writeFile('/home/sourcegraph/.sourcegraph-version', version);
+  writeFile(`${home}/.sourcegraph-version`, version);
   // Configure override file
   copyFileSync(
-    `/home/sourcegraph/deploy/install/override.${size}.yaml`,
-    '/home/sourcegraph/deploy/install/override.yaml'
+    `${home}/deploy/install/override.${size}.yaml`,
+    `${home}/deploy/install/override.yaml`
   );
   console.log('Running upgrade script for size ', size);
   const response = execSync(
-    'bash /home/sourcegraph/SetupWizard/scripts/upgrade.sh'
+    `bash ${home}/SetupWizard/scripts/upgrade.sh`
   ).toString();
   if (response.startsWith('Done')) {
     return res.status(200).json('Passed');

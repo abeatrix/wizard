@@ -1,3 +1,5 @@
+const os = require('os');
+const home = os.homedir();
 // Check if frontend is ready
 export default function handler(req, res) {
   // POST request only
@@ -7,7 +9,7 @@ export default function handler(req, res) {
   try {
     console.log('Checking if frontend is ready');
     const response = execSync(
-      'bash /home/sourcegraph/SetupWizard/scripts/frontend.sh'
+      `bash ${home}/SetupWizard/scripts/frontend.sh`
     ).toString();
     if (response.startsWith('Ready')) {
       return res.status(200).json('Ready');

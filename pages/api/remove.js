@@ -1,3 +1,6 @@
+const os = require('os');
+const home = os.homedir();
+
 // Check if frontend is ready
 export default function handler(req, res) {
   // POST request only
@@ -6,7 +9,7 @@ export default function handler(req, res) {
   }
   try {
     console.log('Removing Setup Wizard from VM...');
-    spawn('bash', ['/home/sourcegraph/SetupWizard/scripts/remove.sh']);
+    spawn('bash', [`${home}/SetupWizard/scripts/remove.sh`]);
     return res.status(200).json('Removed');
   } catch (error) {
     return res.status(400).json('Failed to remove');

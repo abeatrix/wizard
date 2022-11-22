@@ -1,4 +1,7 @@
 const { copyFileSync, writeFile } = require('fs');
+const os = require('os');
+const home = os.homedir();
+
 // Launch the instance with the configurations
 export default function handler(req, res) {
   if (req.method === 'GET') {
@@ -8,14 +11,14 @@ export default function handler(req, res) {
   const size = uri.searchParams.get('size') || 'XS';
   // Configure override file
   copyFileSync(
-    `/home/sourcegraph/deploy/install/override.${size}.yaml`,
-    '/home/sourcegraph/deploy/install/override.yaml'
+    `${home}/deploy/install/override.${size}.yaml`,
+    `${home}/deploy/install/override.yaml`
   );
   // Save size to root disk
-  writeFile('/home/sourcegraph/.sourcegraph-size', size);
+  writeFile(`${home}/.sourcegraph-size`, size);
   console.log('Running launch script');
   const response = execSync(
-    'bash /home/sourcegraph/SetupWizard/scripts/launch.sh'
+    `bash ${home}/SetupWizard/scripts/launch.sh`
   ).toString();
   if (response) {
     return res.status(200).json('Passed');
